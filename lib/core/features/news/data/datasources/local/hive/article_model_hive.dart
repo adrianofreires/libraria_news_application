@@ -1,7 +1,7 @@
 import 'package:hive/hive.dart';
 import 'package:libraria_news_application/core/features/news/data/models/article_model.dart';
 
-// part 'article_model_hive.g.dart';
+part 'article_model_hive.g.dart';
 
 @HiveType(typeId: 0)
 class ArticleModelHive extends ArticleModel {

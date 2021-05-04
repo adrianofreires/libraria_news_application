@@ -61,7 +61,7 @@ class ArticleLocalDataSourceImpl implements ArticleLocalDataSource {
         final appDocumentDir = await path_provider.getApplicationDocumentsDirectory();
         Hive.init(appDocumentDir.path);
       }
-      // Hive.registerAdapter(ArticleModelHiveAdapter());
+      Hive.registerAdapter(ArticleModelHiveAdapter());
       await Hive.openBox<ArticleModelHive>(CACHE_ARTICLES);
       return true;
     } on Exception catch (e) {
