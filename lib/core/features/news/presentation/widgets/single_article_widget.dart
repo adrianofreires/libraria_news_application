@@ -25,13 +25,9 @@ class _SingleArticleState extends State<SingleArticle> {
   @override
   Widget build(BuildContext context) {
     return WebView(
+      //TODO tirar o header da página
       initialUrl: widget.url,
       javascriptMode: JavascriptMode.unrestricted,
     );
   }
-
-// Future<void> controllerWebView() async {
-//   for (var index in displayNone) {
-//     await _controller.evaluateJavascript(displayNone[index]);
-//   }
 }
