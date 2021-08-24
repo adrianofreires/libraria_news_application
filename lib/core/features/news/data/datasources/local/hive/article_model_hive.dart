@@ -7,7 +7,7 @@ part 'article_model_hive.g.dart';
 class ArticleModelHive extends ArticleModel {
   ArticleModelHive({
     @HiveField(0) required int id,
-    @HiveField(1) required String date,
+    @HiveField(1) required DateTime date,
     @HiveField(2) required String image,
     @HiveField(3) required String title,
     @HiveField(4) required String linkUrl,

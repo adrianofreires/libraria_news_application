@@ -1,9 +1,10 @@
+import 'package:intl/intl.dart';
 import 'package:libraria_news_application/core/features/news/domain/entities/article.dart';
 
 class ArticleModel extends Article {
   ArticleModel({
     required int id,
-    required String date,
+    required DateTime date,
     required String image,
     required String title,
     required String linkUrl,
@@ -20,7 +21,7 @@ class ArticleModel extends Article {
   factory ArticleModel.fromJson(Map<dynamic, dynamic> json) {
     return ArticleModel(
         id: json['id'],
-        date: json['date'],
+        date: DateTime.parse(json['date']),
         image: json['fimg_url'],
         title: json['title']['rendered'],
         linkUrl: json['link'],

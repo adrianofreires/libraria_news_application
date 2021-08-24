@@ -11,6 +11,10 @@ class ListArticles extends ArticlesEvent {
   ListArticles() : super();
 }
 
+class ArticlesRefresh extends ArticlesEvent {
+  ArticlesRefresh() : super();
+}
+
 class SingleArticle extends ArticlesEvent {
   final String url;
 

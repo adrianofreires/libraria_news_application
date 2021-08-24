@@ -28,20 +28,33 @@ class _NewsHomePageState extends State<NewsHomePage> {
   }
 
   Widget buildBody(BuildContext context) {
-    return BlocBuilder<ArticlesBloc, ArticlesState>(builder: (context, state) {
-      if (state is ArticlesInitial) {
-        return Center(
-          child: Text('Iniciando...'),
-        );
-      } else if (state is ArticlesLoading) {
-        return ArticleLoading();
-      } else if (state is ListArticlesLoaded) {
-        allArticles.addAll(state.listArticle);
-        return ArticleList(articles: allArticles, controller: _scrollController);
-      } else {
-        return Text('Erro');
-      }
-    });
+    return Container(
+      child: BlocListener<ArticlesBloc, ArticlesState>(
+        listener: (context, state) {
+          if (state is ListArticlesLoaded) {
+            allArticles.addAll(state.listArticle);
+          }
+        },
+        child: BlocBuilder<ArticlesBloc, ArticlesState>(builder: (context, state) {
+          if (state is ArticlesInitial) {
+            return Center(
+              child: Text('Iniciando...'),
+            );
+          } else if (state is ArticlesLoading) {
+            return ArticleLoading();
+          } else if (state is ListArticlesLoaded) {
+            return RefreshIndicator(
+                onRefresh: () async {
+                  allArticles = [];
+                  BlocProvider.of<ArticlesBloc>(context).add(ArticlesRefresh());
+                },
+                child: ArticleList(articles: allArticles, controller: _scrollController));
+          } else {
+            return Text('Erro');
+          }
+        }),
+      ),
+    );
   }
 
   @override
@@ -49,7 +62,7 @@ class _NewsHomePageState extends State<NewsHomePage> {
     return Scaffold(
       backgroundColor: Theme.of(context).primaryColor,
       appBar: AppBar(
-        backgroundColor: Colors.black,
+        // backgroundColor: Colors.black,
         title: Text('News'),
       ),
       body: buildBody(context),

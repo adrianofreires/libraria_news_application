@@ -22,6 +22,8 @@ class ListArticlesLoaded extends ArticlesState {
   String toString() => 'ListArticlesLoaded { listArticles: ${listArticle.length}';
 }
 
+class ArticlesRefreshing extends ArticlesState {}
+
 class SingleArticleBloc extends ArticlesState {
   final String urlArticle;
 

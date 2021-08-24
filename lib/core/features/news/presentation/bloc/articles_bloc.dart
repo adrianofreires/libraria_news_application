@@ -31,8 +31,18 @@ class ArticlesBloc extends Bloc<ArticlesEvent, ArticlesState> {
       final failureOrArticle = await getListArticles.call(currentPage);
       print('Pagina Atual: $currentPage');
       currentPage++;
-      yield failureOrArticle.fold((failure) => Error(error: _mapFailureToMessage(failure)),
-          (articles) => ListArticlesLoaded(listArticle: articles));
+      yield failureOrArticle.fold((failure) => Error(error: _mapFailureToMessage(failure)), (articles) {
+        //final articlesRefresh = _articlesRefresh(articles);
+        return ListArticlesLoaded(listArticle: articles);
+      });
+    } else if (event is ArticlesRefresh) {
+      yield ArticlesRefreshing();
+      final failureOrArticle = await getListArticles.call(1);
+      print('Lista Nova: 1');
+      yield failureOrArticle.fold((failure) => Error(error: _mapFailureToMessage(failure)), (articles) {
+        //final articlesRefresh = _articlesRefresh(articles);
+        return ListArticlesLoaded(listArticle: articles);
+      });
     } else if (event is SingleArticle) {
       final url = event.url;
       yield ArticlesLoading();

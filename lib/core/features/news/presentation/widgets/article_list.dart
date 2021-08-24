@@ -16,39 +16,41 @@ class ArticleList extends StatelessWidget {
         controller: controller,
         itemBuilder: (context, index) {
           return Card(
-            elevation: 5,
             margin: EdgeInsets.symmetric(vertical: 9.0, horizontal: 8.0),
-            shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(8.0)),
-            color: Colors.black,
+            //shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(8.0)),
+            color: Color(0xFF1e1e22),
             child: GestureDetector(
               onTap: () {
                 showDialog(
                     context: context,
                     builder: (_) {
-                      return SingleArticle(url: articles[index].linkUrl);
+                      return SingleArticle(
+                        url: articles[index].linkUrl,
+                        category: articles[index].categories.first,
+                      );
                     });
               },
               child: Column(
                 children: [
-                  ClipRRect(
-                      borderRadius: BorderRadius.only(topLeft: Radius.circular(8.0), topRight: Radius.circular(8.0)),
-                      child: Image.network(articles[index].image)),
+                  ClipRRect(borderRadius: BorderRadius.circular(8.0), child: Image.network(articles[index].image)),
                   SizedBox(
                     height: 8.0,
                   ),
                   Padding(
-                    padding: const EdgeInsets.symmetric(horizontal: 15.0),
+                    padding: const EdgeInsets.symmetric(horizontal: 15.0, vertical: 6),
                     child: Row(
                       mainAxisAlignment: MainAxisAlignment.spaceBetween,
                       children: [
                         Text(
                           articles[index].categories.first,
                           style: TextStyle(
+                            fontSize: 14.0,
                             color: Theme.of(context).accentColor,
+                            fontWeight: FontWeight.w600,
                           ),
                         ),
                         Text(
-                          articles[index].date,
+                          articles[index].dateFormatted(articles[index].date)!,
                           style: TextStyle(
                             color: Colors.grey,
                           ),
@@ -63,9 +65,12 @@ class ArticleList extends StatelessWidget {
                       style: TextStyle(
                         color: Colors.white,
                         fontWeight: FontWeight.w600,
-                        fontSize: 20.0,
+                        fontSize: 18.0,
                       ),
                     ),
+                  ),
+                  SizedBox(
+                    height: 16.0,
                   ),
                 ],
               ),
