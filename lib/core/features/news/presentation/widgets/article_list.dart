@@ -45,8 +45,8 @@ class ArticleList extends StatelessWidget {
                           articles[index].categories.first,
                           style: TextStyle(
                             fontSize: 14.0,
-                            color: Theme.of(context).accentColor,
-                            fontWeight: FontWeight.w600,
+                            color: ThemeData.dark().errorColor,
+                            fontWeight: FontWeight.w700,
                           ),
                         ),
                         Text(

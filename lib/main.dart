@@ -20,12 +20,11 @@ class News extends StatelessWidget {
     return MaterialApp(
       debugShowCheckedModeBanner: false,
       title: 'News',
-      themeMode: ThemeMode.dark,
       theme: ThemeData(
-        primaryColor: Color(0xFF1e1e22),
-        accentColor: Color(0xFFe82822),
         textTheme: GoogleFonts.interTextTheme(),
-        //visualDensity: VisualDensity.adaptivePlatformDensity,
+        colorScheme: ColorScheme.dark().copyWith(
+            background: Color(0xFF1e1e22), primaryVariant: const Color(0xFF1e1e22), secondary: const Color(0xffe82822)),
+        visualDensity: VisualDensity.adaptivePlatformDensity,
       ),
       home: BlocProvider(
         create: (_) => service_locator<ArticlesBloc>(),

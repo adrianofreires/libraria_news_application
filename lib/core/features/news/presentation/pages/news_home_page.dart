@@ -44,6 +44,7 @@ class _NewsHomePageState extends State<NewsHomePage> {
             return ArticleLoading();
           } else if (state is ListArticlesLoaded) {
             return RefreshIndicator(
+                color: Color(0xffe82822),
                 onRefresh: () async {
                   allArticles = [];
                   BlocProvider.of<ArticlesBloc>(context).add(ArticlesRefresh());
@@ -62,8 +63,11 @@ class _NewsHomePageState extends State<NewsHomePage> {
     return Scaffold(
       backgroundColor: Theme.of(context).primaryColor,
       appBar: AppBar(
-        // backgroundColor: Colors.black,
-        title: Text('News'),
+        centerTitle: true,
+        title: Image(
+          image: AssetImage('assets/logo_news_bar.png'),
+          width: 120,
+        ),
       ),
       body: buildBody(context),
     );

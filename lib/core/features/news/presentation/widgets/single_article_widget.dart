@@ -16,12 +16,6 @@ class _SingleArticleState extends State<SingleArticle> {
   final Completer<WebViewController> _completer = Completer<WebViewController>();
   final newKey = UniqueKey();
   int position = 1;
-  // final List<String> displayNone = [
-  //   "document.getElementById('navigation-sticky-wrapper').style.display='none';",
-  //   "document.getElementsByClassName('penci-footer-social-media penci-lazy')[0].style.display='none';",
-  //   "document.getElementById('widget-area').style.display='none';"
-  // ];
-
   @override
   void initState() {
     super.initState();
@@ -32,6 +26,7 @@ class _SingleArticleState extends State<SingleArticle> {
     return Scaffold(
       appBar: AppBar(
         title: Text(widget.category),
+        titleTextStyle: TextStyle(fontWeight: FontWeight.w600, color: Color(0xffe82822), fontSize: 16),
       ),
       body: IndexedStack(
         index: position,
@@ -48,7 +43,7 @@ class _SingleArticleState extends State<SingleArticle> {
             color: Theme.of(context).primaryColor,
             child: Center(
               child: CircularProgressIndicator(
-                color: Theme.of(context).accentColor,
+                color: Color(0xffe82822),
               ),
             ),
           ),
