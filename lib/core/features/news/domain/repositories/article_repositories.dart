@@ -4,5 +4,6 @@ import 'package:libraria_news_application/core/features/news/domain/entities/art
 
 abstract class ArticleRepository {
   Future<Either<Failure, List<Article>>> getListArticles({int page});
+  Future<Either<Failure, List<Article>>> searchArticles({String query});
   Future<Either<Failure, String>> getSingleArticle({String url});
 }

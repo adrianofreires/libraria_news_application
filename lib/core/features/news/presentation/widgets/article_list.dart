@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:libraria_news_application/core/features/news/domain/entities/article.dart';
-import 'package:libraria_news_application/core/features/news/presentation/widgets/single_article_widget.dart';
+import 'package:libraria_news_application/core/features/news/presentation/pages/single_article_page.dart';
 
 class ArticleList extends StatelessWidget {
   final List<Article> articles;
@@ -17,7 +17,6 @@ class ArticleList extends StatelessWidget {
         itemBuilder: (context, index) {
           return Card(
             margin: EdgeInsets.symmetric(vertical: 9.0, horizontal: 8.0),
-            //shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(8.0)),
             color: Color(0xFF1e1e22),
             child: GestureDetector(
               onTap: () {
@@ -60,13 +59,19 @@ class ArticleList extends StatelessWidget {
                   ),
                   Padding(
                     padding: const EdgeInsets.symmetric(horizontal: 15.0, vertical: 8.0),
-                    child: Text(
-                      articles[index].title,
-                      style: TextStyle(
-                        color: Colors.white,
-                        fontWeight: FontWeight.w600,
-                        fontSize: 18.0,
-                      ),
+                    child: Column(
+                      crossAxisAlignment: CrossAxisAlignment.stretch,
+                      children: [
+                        Text(
+                          articles[index].title,
+                          textAlign: TextAlign.left,
+                          style: TextStyle(
+                            color: Colors.white,
+                            fontWeight: FontWeight.w600,
+                            fontSize: 18.0,
+                          ),
+                        ),
+                      ],
                     ),
                   ),
                   SizedBox(

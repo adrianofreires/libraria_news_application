@@ -12,12 +12,16 @@ class ArticleRepositoryImpl implements ArticleRepository {
   final ArticleLocalDataSource localDataSource;
   final NetworkInfo networkInfo;
 
-  ArticleRepositoryImpl({required this.remoteDataSource, required this.localDataSource, required this.networkInfo});
+  ArticleRepositoryImpl(
+      {required this.remoteDataSource,
+      required this.localDataSource,
+      required this.networkInfo});
   @override
   Future<Either<Failure, List<Article>>> getListArticles({int page = 1}) async {
     if (await networkInfo.isConnected) {
       try {
-        final remoteArticles = await remoteDataSource.getListArticles(page: page);
+        final remoteArticles =
+            await remoteDataSource.getListArticles(page: page);
         localDataSource.cacheArticles(remoteArticles);
         return Right(remoteArticles);
       } on ServerException {
@@ -43,6 +47,26 @@ class ArticleRepositoryImpl implements ArticleRepository {
       }
     } else {
       return Left(CacheFailure());
+    }
+  }
+
+  @override
+  Future<Either<Failure, List<Article>>> searchArticles({String? query}) async {
+    if (await networkInfo.isConnected) {
+      try {
+        final searchArticles =
+            await remoteDataSource.searchArticles(query: query);
+        return Right(searchArticles);
+      } on ServerException {
+        return Left(ServerFailure());
+      }
+    } else {
+      try {
+        final localArticles = await localDataSource.getLastArticles();
+        return Right(localArticles);
+      } on CacheException {
+        return Left(CacheFailure());
+      }
     }
   }
 }

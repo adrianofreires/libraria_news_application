@@ -10,6 +10,11 @@ abstract class ArticleRemoteDataSource {
   ///Throws a [ServerException] for all errors codes.
   Future<List<ArticleModel>> getListArticles({int page});
 
+  ///Calls the https://news.libraria.com.br/wp-json/wp/v2/posts?search=$query endpoint
+  ///
+  ///Throws a [ServerException] for all errors codes.
+  Future<List<ArticleModel>> searchArticles({String? query});
+
   ///Calls the news url when user press the specific article
   ///
   ///Throws a [ServerException] for all errors codes.
@@ -24,6 +29,16 @@ class ArticleRemoteDataSourceImpl implements ArticleRemoteDataSource {
   @override
   Future<List<ArticleModel>> getListArticles({int page = 1}) async {
     final response = await client.get(Uri.parse('https://news.libraria.com.br/wp-json/wp/v2/posts?page=$page'));
+    if (response.statusCode == 200) {
+      return parseArticles(response.body);
+    } else {
+      throw ServerException();
+    }
+  }
+
+  @override
+  Future<List<ArticleModel>> searchArticles({String? query}) async {
+    final response = await client.get(Uri.parse('https://news.libraria.com.br/wp-json/wp/v2/posts?search=$query'));
     if (response.statusCode == 200) {
       return parseArticles(response.body);
     } else {

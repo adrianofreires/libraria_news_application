@@ -1,9 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:libraria_news_application/core/features/news/domain/entities/article.dart';
-import 'package:libraria_news_application/core/features/news/presentation/bloc/articles_bloc.dart';
+import 'package:libraria_news_application/core/features/news/presentation/bloc/articles_bloc/articles_bloc.dart';
+import 'package:libraria_news_application/core/features/news/presentation/bloc/search_articles_bloc/search_articles_bloc.dart';
 import 'package:libraria_news_application/core/features/news/presentation/widgets/article_list.dart';
 import 'package:libraria_news_application/core/features/news/presentation/widgets/article_loading.dart';
+import 'package:libraria_news_application/core/features/news/presentation/widgets/custom_search_delegate.dart';
 
 class NewsHomePage extends StatefulWidget {
   @override
@@ -38,7 +40,9 @@ class _NewsHomePageState extends State<NewsHomePage> {
         child: BlocBuilder<ArticlesBloc, ArticlesState>(builder: (context, state) {
           if (state is ArticlesInitial) {
             return Center(
-              child: Text('Iniciando...'),
+              child: CircularProgressIndicator(
+                color: Color(0xffe82822),
+              ),
             );
           } else if (state is ArticlesLoading) {
             return ArticleLoading();
@@ -68,6 +72,16 @@ class _NewsHomePageState extends State<NewsHomePage> {
           image: AssetImage('assets/logo_news_bar.png'),
           width: 120,
         ),
+        actions: <Widget>[
+          IconButton(
+            icon: Icon(Icons.search),
+            onPressed: () {
+              showSearch(
+                  context: context,
+                  delegate: CustomSearchDelegate(searchBloc: BlocProvider.of<SearchArticlesBloc>(context)));
+            },
+          ),
+        ],
       ),
       body: buildBody(context),
     );
