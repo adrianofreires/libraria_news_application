@@ -32,9 +32,15 @@ class News extends StatelessWidget {
         debugShowCheckedModeBanner: false,
         title: 'News',
         theme: ThemeData(
-            textTheme: GoogleFonts.interTextTheme(),
+            textTheme: GoogleFonts.interTextTheme().copyWith(headline6: TextStyle(color: Colors.white)),
+            inputDecorationTheme: InputDecorationTheme(
+              hintStyle: TextStyle(color: Colors.white),
+            ),
             colorScheme: ColorScheme.dark().copyWith(
-                background: Color(0xFF1e1e22), primaryVariant: Color(0xFF1e1e22), secondary: Color(0xFFe82822)),
+                background: Color(0xFF1e1e22),
+                primaryVariant: Color(0xFF1e1e22),
+                secondary: Color(0xFFe82822),
+                onSecondary: Color(0xFFe82822)),
             visualDensity: VisualDensity.adaptivePlatformDensity),
         home: NewsHomePage(),
       ),

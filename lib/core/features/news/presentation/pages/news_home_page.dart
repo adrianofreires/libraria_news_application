@@ -5,7 +5,9 @@ import 'package:libraria_news_application/core/features/news/presentation/bloc/a
 import 'package:libraria_news_application/core/features/news/presentation/bloc/search_articles_bloc/search_articles_bloc.dart';
 import 'package:libraria_news_application/core/features/news/presentation/widgets/article_list.dart';
 import 'package:libraria_news_application/core/features/news/presentation/widgets/article_loading.dart';
+import 'package:libraria_news_application/core/features/news/presentation/widgets/custom_drawer_widget.dart';
 import 'package:libraria_news_application/core/features/news/presentation/widgets/custom_search_delegate.dart';
+import 'package:onesignal_flutter/onesignal_flutter.dart';
 
 class NewsHomePage extends StatefulWidget {
   @override
@@ -13,6 +15,7 @@ class NewsHomePage extends StatefulWidget {
 }
 
 class _NewsHomePageState extends State<NewsHomePage> {
+  static final String oneSignalAppID = "54efcec4-7eb0-4ee9-a23a-12712ee1e11c";
   ScrollController _scrollController = ScrollController();
   List<Article> allArticles = [];
 
@@ -27,6 +30,7 @@ class _NewsHomePageState extends State<NewsHomePage> {
       }
     });
     super.initState();
+    initPlatformState();
   }
 
   Widget buildBody(BuildContext context) {
@@ -66,6 +70,7 @@ class _NewsHomePageState extends State<NewsHomePage> {
   Widget build(BuildContext context) {
     return Scaffold(
       backgroundColor: Theme.of(context).primaryColor,
+      drawer: CustomDrawer(),
       appBar: AppBar(
         centerTitle: true,
         title: Image(
@@ -85,5 +90,12 @@ class _NewsHomePageState extends State<NewsHomePage> {
       ),
       body: buildBody(context),
     );
+  }
+
+  Future<void> initPlatformState() async {
+    OneSignal.shared.setAppId(oneSignalAppID);
+    OneSignal.shared
+        .promptUserForPushNotificationPermission()
+        .then((accepted) => print('Permissão Concessida: $accepted'));
   }
 }

@@ -27,7 +27,7 @@ dependencies:
   # Use with the CupertinoIcons class for iOS style icons.
   cupertino_icons: ^1.0.2
   # Value equality
-  equatable: ^2.0.0
+  equatable: ^2.0.3
   # Functional programming thingies
   dartz: ^0.10.0-nullsafety.1
   # Remote API
@@ -45,6 +45,7 @@ dependencies:
   bloc: ^7.1.0
   flutter_bloc: ^7.1.0
   #notification
+  onesignal_flutter: ^3.2.3
   # Local NoSQL
   hive: ^2.0.4
   hive_flutter: ^1.0.0
