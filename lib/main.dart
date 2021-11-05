@@ -6,6 +6,7 @@ import 'package:libraria_news_application/core/features/news/presentation/bloc/s
 import 'package:libraria_news_application/core/features/news/presentation/widgets/custom_search_delegate.dart';
 import 'package:libraria_news_application/injection_container.dart' as injection;
 import 'package:libraria_news_application/injection_container.dart';
+import 'package:onesignal_flutter/onesignal_flutter.dart';
 
 import 'core/features/news/presentation/bloc/articles_bloc/articles_bloc.dart';
 import 'core/features/news/presentation/pages/news_home_page.dart';
@@ -16,7 +17,19 @@ Future<void> main() async {
   initializeDateFormatting('pt_BR', null).then((_) => runApp(News()));
 }
 
-class News extends StatelessWidget {
+class News extends StatefulWidget {
+  @override
+  State<News> createState() => _NewsState();
+}
+
+class _NewsState extends State<News> {
+  static final String oneSignalAppID = "54efcec4-7eb0-4ee9-a23a-12712ee1e11c";
+  @override
+  void initState() {
+    super.initState();
+    initPlatformState();
+  }
+
   @override
   Widget build(BuildContext context) {
     return MultiBlocProvider(
@@ -45,5 +58,15 @@ class News extends StatelessWidget {
         home: NewsHomePage(),
       ),
     );
+  }
+
+  Future<void> initPlatformState() async {
+    OneSignal.shared.setLogLevel(OSLogLevel.verbose, OSLogLevel.none);
+    OneSignal.shared.setRequiresUserPrivacyConsent(true);
+    OneSignal.shared.consentGranted(true);
+    OneSignal.shared.setAppId(oneSignalAppID);
+    OneSignal.shared
+        .promptUserForPushNotificationPermission()
+        .then((accepted) => print('Permissão Concessida: $accepted'));
   }
 }
