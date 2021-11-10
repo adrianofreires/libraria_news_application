@@ -4,17 +4,17 @@ import 'package:flutter/material.dart';
 import 'package:share/share.dart';
 import 'package:webview_flutter/webview_flutter.dart';
 
-class SingleArticle extends StatefulWidget {
+class SingleArticlePage extends StatefulWidget {
   final String url, category;
 
-  SingleArticle({Key? key, required this.url, required this.category})
+  SingleArticlePage({Key? key, required this.url, required this.category})
       : super(key: key);
 
   @override
   _SingleArticleState createState() => _SingleArticleState();
 }
 
-class _SingleArticleState extends State<SingleArticle> {
+class _SingleArticleState extends State<SingleArticlePage> {
   final Completer<WebViewController> _completer =
       Completer<WebViewController>();
   final newKey = UniqueKey();

@@ -45,7 +45,7 @@ class SearchResultWidget extends StatelessWidget {
                       showDialog(
                           context: context,
                           builder: (_) {
-                            return SingleArticle(
+                            return SingleArticlePage(
                               url: state.results[index].linkUrl,
                               category: state.results[index].categories.first,
                             );

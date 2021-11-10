@@ -42,8 +42,8 @@ dependencies:
   #dependenci injection
   get_it: ^7.2.0
   #state manager
-  bloc: ^7.1.0
-  flutter_bloc: ^7.1.0
+  bloc: ^7.2.1
+  flutter_bloc: ^7.3.3
   #notification
   onesignal_flutter: ^3.2.4
   # Local NoSQL
@@ -51,6 +51,8 @@ dependencies:
   hive_flutter: ^1.0.0
   path_provider: ^2.0.1
   share: ^2.0.4
+  #Google Ad Mobile
+  google_mobile_ads: ^0.13.6
 
 dev_dependencies:
   flutter_test:

@@ -2,18 +2,24 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:intl/date_symbol_data_local.dart';
+import 'package:libraria_news_application/core/features/news/data/helpers/ad_helper.dart';
 import 'package:libraria_news_application/core/features/news/presentation/bloc/search_articles_bloc/search_articles_bloc.dart';
+import 'package:libraria_news_application/core/features/news/presentation/pages/single_article_page.dart';
 import 'package:libraria_news_application/core/features/news/presentation/widgets/custom_search_delegate.dart';
-import 'package:libraria_news_application/injection_container.dart' as injection;
+import 'package:libraria_news_application/injection_container.dart'
+    as injection;
 import 'package:libraria_news_application/injection_container.dart';
 import 'package:onesignal_flutter/onesignal_flutter.dart';
 
 import 'core/features/news/presentation/bloc/articles_bloc/articles_bloc.dart';
 import 'core/features/news/presentation/pages/news_home_page.dart';
+import 'core/features/news/presentation/global/global.dart' as global;
 
 Future<void> main() async {
   WidgetsFlutterBinding.ensureInitialized();
   await injection.init();
+  global.appNavigator = GlobalKey<NavigatorState>();
+  AdHelper.initialization();
   initializeDateFormatting('pt_BR', null).then((_) => runApp(News()));
 }
 
@@ -35,7 +41,8 @@ class _NewsState extends State<News> {
     return MultiBlocProvider(
       providers: [
         BlocProvider(
-          create: (BuildContext context) => service_locator<SearchArticlesBloc>(),
+          create: (BuildContext context) =>
+              service_locator<SearchArticlesBloc>(),
         ),
         BlocProvider(
           create: (BuildContext context) => service_locator<ArticlesBloc>(),
@@ -45,7 +52,8 @@ class _NewsState extends State<News> {
         debugShowCheckedModeBanner: false,
         title: 'News',
         theme: ThemeData(
-            textTheme: GoogleFonts.interTextTheme().copyWith(headline6: TextStyle(color: Colors.white)),
+            textTheme: GoogleFonts.interTextTheme()
+                .copyWith(headline6: TextStyle(color: Colors.white)),
             inputDecorationTheme: InputDecorationTheme(
               hintStyle: TextStyle(color: Colors.white),
             ),
@@ -55,6 +63,7 @@ class _NewsState extends State<News> {
                 secondary: Color(0xFFe82822),
                 onSecondary: Color(0xFFe82822)),
             visualDensity: VisualDensity.adaptivePlatformDensity),
+        navigatorKey: global.appNavigator,
         home: NewsHomePage(),
       ),
     );
@@ -68,5 +77,12 @@ class _NewsState extends State<News> {
     OneSignal.shared
         .promptUserForPushNotificationPermission()
         .then((accepted) => print('Permissão Concessida: $accepted'));
+
+    OneSignal.shared.setNotificationOpenedHandler((openedResult) {
+      var data = openedResult.notification.launchUrl.toString();
+      global.appNavigator!.currentState!.push(MaterialPageRoute(
+          builder: (context) =>
+              SingleArticlePage(url: data, category: 'Novidade')));
+    });
   }
 }
